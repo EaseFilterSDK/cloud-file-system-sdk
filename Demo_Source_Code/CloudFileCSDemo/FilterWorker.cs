@@ -40,7 +40,7 @@ namespace CloudFileDemo
 
                 //Purchase a license key with the link: http://www.easefilter.com/Order.html
                 //Email us to request a trial key: info@easefilter.com //free email is not accepted.
-                string licenseKey = "***********************************************";
+                string licenseKey = CloudFile.CommonObjects.GlobalConfig.LicenseKey;
                 
                 //number of the threads to handle the file requests.
                 int connectionThreads = 5;
@@ -85,7 +85,8 @@ namespace CloudFileDemo
             }
             finally
             {
-               StopService();
+              CloudFile.CommonObjects.GlobalConfig.Stop();
+              StopService();
             }
 
         }

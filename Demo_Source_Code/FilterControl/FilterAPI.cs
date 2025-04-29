@@ -337,6 +337,91 @@ namespace CloudFile.FilterControl
             return errorMessage;
         }
 
+        [DllImport("FilterAPI.dll", SetLastError = true)]
+        public static extern bool CreateStubFile(
+          [MarshalAs(UnmanagedType.LPWStr)] string fileName,
+          long fileSize,  //if it is 0 and the file exist,it will use the current file size.
+           uint fileAttributes, //if it is 0 and the file exist, it will use the current file attributes.
+           uint tagDataLength,
+           IntPtr tagData,
+           bool overwriteIfExist,
+           ref IntPtr fileHandle);
+
+        /// <summary>
+        /// Create stub file.
+        /// </summary>
+        /// <param name="fileName">the stub file name to be created</param>
+        /// <param name="fileSize">if it is 0 and the file exist,it will use the current file size.</param>
+        /// <param name="fileAttributes">if it is 0 and the file exist, it will use the current file attributes.</param>
+        /// <param name="tagDataLength">the length of the reparse point tag data</param>
+        /// <param name="tagData">the reparse point tag data</param>
+        /// <param name="creationTime">set the creation time of the stub file if it is not 0</param>
+        /// <param name="lastWriteTime">set the last write time of the stub file if it is not 0</param>
+        /// <param name="lastAccessTime">set the last access time of the stub file if it is not 0</param>
+        /// <param name="overwriteIfExist">overwrite the existing file if it is true and the file exist. </param>
+        /// <param name="fileHandle">the return file handle of the stub file</param>
+        /// <returns>return true if the stub file was created successfully.</returns>
+        [DllImport("FilterAPI.dll", SetLastError = true)]
+        public static extern bool CreateStubFileEx(
+             [MarshalAs(UnmanagedType.LPWStr)] string fileName,
+             long fileSize,
+              uint fileAttributes,
+              uint tagDataLength,
+              IntPtr tagData,
+              long creationTime,
+              long lastWriteTime,
+              long lastAccessTime,
+              bool overwriteIfExist,
+              ref IntPtr fileHandle);
+
+
+        /// <summary>
+        /// Create sparse file,it is for block download feature to support the application only wants to download some blocks instead of the whole file.
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="fileSize"></param>
+        /// <param name="creationTime"></param>
+        /// <param name="fileAttributes"></param>
+        /// <returns></returns>
+        public static FileStream CreateSparseFile(string fileName, long fileSize, DateTime creationTime, uint fileAttributes, bool overwriteIfExist)
+        {
+            FileStream fs = null;
+
+            try
+            {
+
+                IntPtr fileHandle = IntPtr.Zero;
+                bool ret = CreateStubFile(fileName, fileSize, fileAttributes, 0, IntPtr.Zero, overwriteIfExist, ref fileHandle);
+                if (!ret)
+                {
+                    string lastError = GetLastErrorMessage();
+                    throw new Exception(lastError);
+                }
+
+                SafeFileHandle shFile = new SafeFileHandle(fileHandle, true);
+                fs = new FileStream(shFile, FileAccess.ReadWrite);
+
+                File.SetCreationTime(fileName, creationTime);
+
+                fs.Seek(0, SeekOrigin.Begin);
+            }
+            catch (Exception ex)
+            {
+                string lastError = "CreateSparseFile failed with error:" + ex.Message;
+
+                if (fs != null)
+                {
+                    fs.Close();
+                    fs = null;
+                }
+
+                throw new Exception(lastError);
+            }
+
+            return fs;
+        }
+
+
         public static bool DecodeUserInfo(MessageSendData messageSend, out string userName, out string processName)
         {
             bool ret = true;

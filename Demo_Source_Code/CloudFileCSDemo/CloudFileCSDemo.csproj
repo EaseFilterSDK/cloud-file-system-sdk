@@ -150,6 +150,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AmazonS3Sup\AmazonS3Sup.csproj">
+      <Project>{a5ff34ee-e1b0-4ee1-b2e1-cab31f9a9682}</Project>
+      <Name>AmazonS3Sup</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CommonObjects\CommonObjects.csproj">
+      <Project>{89c02385-84a8-44ce-a4b8-60e392ce9b08}</Project>
+      <Name>CommonObjects</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FilterControl\FilterControl.csproj">
       <Project>{3bcb54bc-a6bc-4a9f-a316-3a8500de70e7}</Project>
       <Name>FilterControl</Name>
