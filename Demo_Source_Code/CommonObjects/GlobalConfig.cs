@@ -83,6 +83,7 @@ namespace CloudFile.CommonObjects
         public static bool isRunning = true;
         public static ManualResetEvent stopEvent = new ManualResetEvent(false);
 
+        static string accountName = "";
         static string licenseKey = "";
         static long expireTime = 0;
 
@@ -109,6 +110,7 @@ namespace CloudFile.CommonObjects
                 returnBlockData = ConfigSetting.Get("returnBlockData", returnBlockData);
                 reOpenFileOneReHydration = ConfigSetting.Get("reOpenFileOneReHydration", reOpenFileOneReHydration);
 
+                accountName = ConfigSetting.Get("accountName", accountName);
                 licenseKey = ConfigSetting.Get("licenseKey", licenseKey);
                 expireTime = ConfigSetting.Get("expireTime", expireTime);
             }
@@ -123,7 +125,17 @@ namespace CloudFile.CommonObjects
             isRunning = false;
             stopEvent.Set();
 
-        }      
+        }
+
+        public static string AccountName
+        {
+            get { return accountName; }
+            set
+            {
+                accountName = value;
+                ConfigSetting.Set("accountName", value.ToString());
+            }
+        }
 
         public static string LicenseKey
         {

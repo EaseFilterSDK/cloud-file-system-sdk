@@ -214,6 +214,7 @@
             this.Name = "CloudFileS3Form";
             this.Text = "Cloud File DR With S3 Demo";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.demoForm_FormClosed);
+            this.Shown += new System.EventHandler(this.CloudFileS3Form_Shown);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);

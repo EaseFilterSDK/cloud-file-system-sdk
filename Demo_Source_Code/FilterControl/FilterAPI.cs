@@ -201,6 +201,13 @@ namespace CloudFile.FilterControl
          bool isResident);
 
         /// <summary>
+        /// Get the computerId 
+        /// </summary>
+        /// <returns></returns>
+        [DllImport("FilterAPI.dll", SetLastError = true)]
+        public static extern uint GetComputerId();
+
+        /// <summary>
         /// The file changed events for monitor filter, it will be fired after the file handle was closed.
         /// </summary>
         public enum FileChangedEvents : uint

@@ -26,6 +26,9 @@ namespace CloudFileS3Demo
                 textBox_Timeout.Text = GlobalConfig.ConnectionTimeOut.ToString();
                 textBox_DeleteCacheFileAfterSeconds.Text = GlobalConfig.DeleteCachedFilesAfterSeconds.ToString();
 
+                textBox_TestSourceFolder.Text = LocalVirtualFileHandler.TestSourceFolder;
+                textBox_TestVirtualFolder.Text = LocalVirtualFileHandler.TestCloudFolder;
+
                 foreach (EventLevel item in Enum.GetValues(typeof(EventLevel)))
                 {
                     comboBox_EventLevel.Items.Add(item.ToString());
@@ -94,6 +97,9 @@ namespace CloudFileS3Demo
                 GlobalConfig.EventLevel = (EventLevel)comboBox_EventLevel.SelectedIndex;
                 GlobalConfig.DeleteCachedFilesAfterSeconds = int.Parse(textBox_DeleteCacheFileAfterSeconds.Text);
 
+                LocalVirtualFileHandler.TestSourceFolder = textBox_TestSourceFolder.Text ;
+                LocalVirtualFileHandler.TestCloudFolder = textBox_TestVirtualFolder.Text;
+
                 List<uint> exPids = new List<uint>();
                 if (textBox_ExcludePID.Text.Length > 0)
                 {
@@ -143,7 +149,21 @@ namespace CloudFileS3Demo
             }
         }
 
-      
+        private void button_TestSourceFolder_Click(object sender, EventArgs e)
+        {
+            if (folderBrowserDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                textBox_TestSourceFolder.Text = folderBrowserDialog1.SelectedPath;
+            }
+        }
+
+        private void button_TestVirtualFolder_Click(object sender, EventArgs e)
+        {
+            if (folderBrowserDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                textBox_TestVirtualFolder.Text = folderBrowserDialog1.SelectedPath;
+            }
+        }
 
         private void button_AddS3Site_Click_1(object sender, EventArgs e)
         {
@@ -190,5 +210,6 @@ namespace CloudFileS3Demo
 
             InitListView();
         }
+     
     }
 }

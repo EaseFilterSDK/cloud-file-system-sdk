@@ -219,6 +219,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Tools.h" />
     <ClInclude Include="FilterDriverHandler.h" />
+    <ClInclude Include="WinDataStructures.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="CPlusPlusExample.rc" />

@@ -141,6 +141,7 @@
     <Compile Include="CloudFileS3Form.Designer.cs">
       <DependentUpon>CloudFileS3Form.cs</DependentUpon>
     </Compile>
+    <Compile Include="LocalVirtualFileHandler.cs" />
     <Compile Include="SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>

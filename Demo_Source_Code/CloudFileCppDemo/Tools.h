@@ -11,6 +11,7 @@
 #pragma once
 
 #include "FilterAPI.h"
+#include "WinDataStructures.h"
 
 void ChangeColour(WORD theColour);
 

@@ -22,6 +22,7 @@
 
 #define PrintMessage	wprintf //ToDebugger
 
+
 VOID
 __stdcall
 DisconnectCallback();

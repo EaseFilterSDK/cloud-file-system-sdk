@@ -24,7 +24,7 @@ namespace CloudFileS3Demo
 
         static StartType startType = StartType.GuiApp;
         static FilterMessage filterMessage = null;
-        static private Dictionary<string, AsyncTask> workingTasks = new Dictionary<string, AsyncTask>();
+        static private Dictionary<string, AsyncTask> workingTasks = new Dictionary<string, AsyncTask>();      
 
         public static bool StartService(StartType _startType, ListView listView_Message, out string lastError)
         {
@@ -51,6 +51,9 @@ namespace CloudFileS3Demo
                     //Add the local mapped cloud folder to the filter driver.
                     filterControl.CloudFolderList.Add(s3SiteInfo.LocalPath + "\\*");
                 }
+
+                //add the local test virtual folder to the filter driver.
+                filterControl.CloudFolderList.Add(LocalVirtualFileHandler.TestCloudFolder + "\\*");
 
                 if (!filterControl.SendConfigSettingsToFilter(ref lastError))
                 {
@@ -123,13 +126,13 @@ namespace CloudFileS3Demo
                             //it also needs to download the whole cache file and return the cache file name to the filter driver,
                             //the filter driver will read the cache file data, but it won't restore the stub file.
 
-                            DownloadAmazonS3File(e);
+                            DownloadFileToCacheFolder(e);
 
                             break;
                         }
                     case FilterAPI.MessageType.MESSAGE_TYPE_RESTORE_FILE_TO_ORIGINAL_FOLDER:
                         {
-                            DownloadAmazonS3File(e);
+                            DownloadFileToCacheFolder(e);
 
                             if (File.Exists(e.ReturnCacheFileName))
                             {
@@ -142,7 +145,7 @@ namespace CloudFileS3Demo
                         }
                     case FilterAPI.MessageType.MESSAGE_TYPE_DELETE_FILE:
                         {
-                            DeleteAmazonS3File(e);
+                            DeleteCloudFile(e);
 
                             break;
                         }
@@ -165,13 +168,13 @@ namespace CloudFileS3Demo
                                 }
 
                                 //download the file to the cache folder, delete the file from S3.
-                                DownloadAmazonS3File(e);
+                                DownloadFileToCacheFolder(e);
 
                                 if (File.Exists(e.ReturnCacheFileName))
                                 {
                                     File.Copy(e.ReturnCacheFileName, newFileName);
 
-                                    DeleteAmazonS3File(e);
+                                    DeleteCloudFile(e);
                                 }
 
                                 Console.WriteLine("Rename file " + e.FileName + " to new file: " + newFileName);
@@ -222,13 +225,28 @@ namespace CloudFileS3Demo
             }
         }
 
-        public static bool DownloadAmazonS3File(FilterRequestEventArgs e)
+        public static bool DownloadFileToCacheFolder(FilterRequestEventArgs e)
         {
             bool ret = false;
             bool isCacheFileDownloaded = false;
 
             try
             {
+                if (e.FileName.ToLower().StartsWith(LocalVirtualFileHandler.TestCloudFolder.ToLower()))
+                {
+                    //this is the local test virtual file 
+                    //in our test, the cloud file uses the test source file name path as the tag data, you can have your own custom tag data in the cloud file list.
+                    string cacheFileName = Encoding.Unicode.GetString(e.TagData);
+                    //remove the extra data of the file name.
+                    cacheFileName = cacheFileName.Substring(0, e.TagDataLength / 2);
+
+                    e.ReturnCacheFileName = cacheFileName;
+                    e.FilterStatus = FilterAPI.FilterStatus.CACHE_FILE_WAS_RETURNED;
+                    e.ReturnStatus = (uint)FilterAPI.NTSTATUS.STATUS_SUCCESS;
+
+                    return true;
+                }
+
                 //this is the test tag data from the cloud file, you can custom your own tag data for the cloud file.
                 //"sitename:s3 site name;remotepath"
                 string tagDataString = Encoding.Unicode.GetString(e.TagData);
@@ -329,12 +347,26 @@ namespace CloudFileS3Demo
 
         }
 
-        public static bool DeleteAmazonS3File(FilterRequestEventArgs e)
+        public static bool DeleteCloudFile(FilterRequestEventArgs e)
         {
             bool ret = false;
 
             try
             {
+
+                if (e.FileName.ToLower().StartsWith(LocalVirtualFileHandler.TestCloudFolder.ToLower()))
+                {
+                    //this is the local test virtual file 
+                    //in our test, the cloud file uses the test source file name path as the tag data, you can have your own custom tag data in the cloud file list.
+                    string cacheFileName = Encoding.Unicode.GetString(e.TagData);
+                    //remove the extra data of the file name.
+                    cacheFileName = cacheFileName.Substring(0, e.TagDataLength / 2);
+
+                    cacheFileName.Replace("\\??\\", "");
+                    File.Delete(cacheFileName);
+                    return true;
+                }
+
                 //this is the tag data from the cloud file.
                 string tagDataString = Encoding.Unicode.GetString(e.TagData);
                 tagDataString = tagDataString.Substring(0, e.TagDataLength / 2);
@@ -381,6 +413,12 @@ namespace CloudFileS3Demo
         {
             try
             {
+                if(localDirectoryName.ToLower().StartsWith(LocalVirtualFileHandler.TestCloudFolder.ToLower()))
+                {
+                    //this is the local test virtual file 
+                   return LocalVirtualFileHandler.GetFileList(localDirectoryName, ref dirFileListCacheFilePath);
+                }
+
                 AmazonS3SiteInfo currentSiteInfo = CloudUtil.GetSiteInfoByLocalPath(localDirectoryName);
 
                 if(null == currentSiteInfo)

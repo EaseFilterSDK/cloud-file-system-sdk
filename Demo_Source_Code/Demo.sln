@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CloudFileS3Demo", "CloudFil
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "S3Explorer", "S3Explorer\S3Explorer.csproj", "{79D43BBA-6110-4332-BD78-608D4A089EFC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CPlusPlusDemo", "CPlusPlusDemo", "{27B282DA-E6F5-48C3-B347-4843926890B1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CSharpConsoleDemo", "CSharpConsoleDemo", "{F8E4E6F0-DD01-4A93-808D-5D1E9DD93C46}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -160,6 +164,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3EDF5FAE-D331-4584-B435-85FE6FB030D5} = {F8E4E6F0-DD01-4A93-808D-5D1E9DD93C46}
+		{52B1292D-A570-4E5B-AE29-D8E746F5A4E6} = {27B282DA-E6F5-48C3-B347-4843926890B1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2C6DC889-9204-4AF1-A582-40A7608680D2}

@@ -18,7 +18,8 @@ namespace CloudFileS3Demo
 {
     public partial class CloudFileS3Form : Form
     {
-
+        Boolean isMessageDisplayed = false;
+     
         public CloudFileS3Form()
         {
             InitializeComponent();
@@ -128,10 +129,23 @@ namespace CloudFileS3Demo
             System.Diagnostics.Process.Start("https://www.easefilter.com/cloud/cloud-file-dr-s3-demo.htm");
         }
 
+
         private void toolStripButton_S3Explorer_Click(object sender, EventArgs e)
         {
-            string s3explorerPath = GlobalConfig.AssemblyPath + "\\S3Explorer.exe";
+            string s3explorerPath = GlobalConfig.AssemblyPath + "\\CloudFile.S3Explorer.exe";
             System.Diagnostics.Process.Start(s3explorerPath);
+        }
+
+        private void CloudFileS3Form_Shown(object sender, EventArgs e)
+        {
+            if (!isMessageDisplayed)
+            {
+                isMessageDisplayed = true;
+                LocalVirtualFileHandler.CreateTestFiles();
+                MessageBox.Show("1. Local Virtual Files Test\r\n\r\nThe local test virtual files were generated in the folder " + LocalVirtualFileHandler.TestCloudFolder + ",and their corresponding source files are located in " + LocalVirtualFileHandler.TestSourceFolder
+                    + ". You can use these virtual files for testing.\r\n\r\n2. S3 Virtual Files Test\r\n\r\nTo test the virtual file with Amazon S3, you first need to configure the S3 site information. Then, you can test the s3 virtual file in the S3 local mapping folder."
+                    , "Cloud virtual file test", MessageBoxButtons.OK);
+            }
         }
     }
 }

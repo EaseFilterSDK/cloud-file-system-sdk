@@ -84,8 +84,6 @@ namespace AmazonS3Explorer
             this.toolStripButton_Delete = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton_Refresh = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton_StubFile = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton_Help = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -249,8 +247,6 @@ namespace AmazonS3Explorer
             this.toolStripButton_Delete,
             this.toolStripSeparator4,
             this.toolStripButton_Refresh,
-            this.toolStripButton_StubFile,
-            this.toolStripSeparator5,
             this.toolStripSeparator6,
             this.toolStripButton_Help});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
@@ -342,20 +338,6 @@ namespace AmazonS3Explorer
             this.toolStripButton_Refresh.Text = "Refresh";
             this.toolStripButton_Refresh.Click += new System.EventHandler(this.toolStripButton_Refresh_Click);
             // 
-            // toolStripButton_StubFile
-            // 
-            this.toolStripButton_StubFile.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_StubFile.Image")));
-            this.toolStripButton_StubFile.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton_StubFile.Name = "toolStripButton_StubFile";
-            this.toolStripButton_StubFile.Size = new System.Drawing.Size(110, 24);
-            this.toolStripButton_StubFile.Text = "Create stub file";
-            this.toolStripButton_StubFile.Click += new System.EventHandler(this.toolStripButton_CreateStubFile_Click);
-            // 
-            // toolStripSeparator5
-            // 
-            this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 27);
-            // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
@@ -392,7 +374,7 @@ namespace AmazonS3Explorer
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
             // 
-            // CloudExplorer
+            // S3Explorer
             // 
             this.AutoScaleBaseSize = new System.Drawing.Size(5, 13);
             this.ClientSize = new System.Drawing.Size(931, 610);
@@ -402,7 +384,7 @@ namespace AmazonS3Explorer
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.statusStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "CloudExplorer";
+            this.Name = "S3Explorer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Amazon S3 File Explorer";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CloudExplorer_FormClosed);
@@ -420,8 +402,6 @@ namespace AmazonS3Explorer
         private ToolStripButton toolStripButton_Settings;
         private ToolStripSeparator toolStripSeparator6;
         private ToolStripButton toolStripButton_Help;
-        private ToolStripButton toolStripButton_StubFile;
-        private ToolStripSeparator toolStripSeparator5;
         private ToolStripMenuItem createStubFileToolStripMenuItem;
         private ToolStripStatusLabel toolStripStatusLabel1;
     }

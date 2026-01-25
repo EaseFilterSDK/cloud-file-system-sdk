@@ -10,7 +10,7 @@
     <ApplicationIcon>folder_view.ico</ApplicationIcon>
     <AssemblyKeyContainerName>
     </AssemblyKeyContainerName>
-    <AssemblyName>S3Explorer</AssemblyName>
+    <AssemblyName>CloudFile.S3Explorer</AssemblyName>
     <AssemblyOriginatorKeyFile>
     </AssemblyOriginatorKeyFile>
     <DefaultClientScript>JScript</DefaultClientScript>

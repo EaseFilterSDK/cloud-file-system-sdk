@@ -44,6 +44,9 @@
     <ClInclude Include="Tools.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WinDataStructures.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="FilterDriverHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
