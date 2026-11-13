@@ -1,10 +1,34 @@
 # EaseFilter Cloud File System SDK
-## What is a cloud file system
-A cloud file system is a hierarchical storage system in the cloud that provides shared access to file data. Users can create, delete, modify, read, and write cloud files as regular physical files, as well as organize them logically in local directory for intuitive access.
 
-EaseFilter Cloud File System SDK allows you to implement the cloud disaster recovery (Cloud DR) solution, to seamlessly integrate your existing applications to the cloud environment without affecting the original data and programs, without any modification of your existing applications. It can help the small to medium size companies to implement the Cloud DR with the lowest cost and minimal disruption to normal operation.
-![Cloud File System](https://www.easefilter.com/images/CloudFile.png)
-## Cloud-Based Disaster Recovery
+[![Platform](https://img.shields.io/badge/Platform-Windows-blue.svg)]()
+[![Language](https://img.shields.io/badge/Language-C%23%20%7C%20C++%20%7C%20Python%20%7C%20Rust%20%7C%20Java-success.svg)]()
+[![License](https://img.shields.io/badge/License-Commercial-orange.svg)]()
+
+EaseFilter Cloud File System is a Windows virtual file system developed using a kernel-level file system filter driver. It transparently integrates cloud storage into on-premise storage environments, allowing on-premise applications to access cloud files exactly as they would access regular physical files—without requiring any application modifications.
+
+<Image alt="EaseFilter Cloud File System Architecture showing local and cloud storage integration" caption="Cloud File System Integration" src="https://www.easefilter.com/images/cloud-file-dr-architecture.jpg"/>
+
+## 🚀 Key Capabilities
+
+- **Transparent Access**: Read, write, create, and delete cloud files logically within local directories for intuitive access.
+- **Active-Active Clustering**: Run applications across different servers to split traffic loads natively without extra hardware.
+- **Multi-Language Support**: Includes pre-built templates for **C#, C++, Python, Rust, Java, and Go**.
+- **Zero-Downtime DR**: Automatically failover local storage to the cloud in the event of a disaster with minimal business disruption.
+
+---
+
+## 🏗️ Architecture & Core Solutions
+
+### 1. Load Balancing & Local Caching
+The SDK optimizes performance and fault tolerance by controlling traffic across a remote storage cluster while maintaining lightning-fast local caches.
+
+**How the Data Flows:**
+1. **Request:** Remote clients send initial file reads/writes.
+2. **Distribution:** A Load Balancing Gateway distributes requests across a Storage Server Cluster.
+3. **Cache Check:** Each server's CloudFile Driver checks the Local File System (LFS) cache first.
+4. **Data Tiering:** If the data isn't local, the driver transparently recalls the required data object and metadata (like ACLs) from the remote cloud storage back to the LFS.
+
+### 2. Cloud-Based Disaster Recovery (Cloud DR)
 Cloud-based Disaster Recovery (Cloud DR) takes a very different approach for disaster recovery based on virtualization. EaseFilter Cloud File System automatically integrates the cloud storage into the on-premies storage, it can deliver a fully functional virtual infrastructure ready to take over an outage disrupt primary services. The virtual file is stored in an offsite public cloud where it remains in standby ready for failover. Data synchronization operates in the background to keep data up-to-date. The entire system can be spun up in minutes, saving the organization from costly service interruption.
 
 Active-Active Cluster system. With the Cloud File File System, you can set up two or more active systems, which the virtual files can be accessed from all the active systems, it can distribute your load balance and support the automated fail over without your interference.
@@ -50,6 +74,17 @@ Zero downtime for the disaster recovery. With the Cloud File DR solution, in the
 * [Filter Driver Developer Guide](https://www.easefilter.com/kb/DeveloperGuide.htm)
 * [MiniFilter Filter Driver Framework](https://www.easefilter.com/kb/minifilter-framework.htm)
 * [Isolation Filter Driver](https://www.easefilter.com/kb/Isolation_Filter_Driver.htm)
+
+## License
+
+This repository contains two distinct licensing categories:
+
+1. **Wrapper/Implementation Code (MIT License):** 
+   The source code, scripts, and configuration files provided directly in this repository are licensed under the [MIT License](LICENSE). You are free to modify, distribute, and use this specific integration code.
+
+2. **EaseFilter SDK (Commercial License):**
+   This project requires the EaseFilter SDK (including its binaries, filter drivers, and core libraries) to function. The EaseFilter SDK is **proprietary commercial software** and is strictly excluded from the MIT License.   
+   To use the EaseFilter SDK for commercial purposes or in a production environment, you must obtain a valid commercial license directly from [EaseFilter](https://www.easefilter.com/license.pdf).
 
 ## Support
 If you have questions or need help, please contact support@easefilter.com 
